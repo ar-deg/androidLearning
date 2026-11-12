@@ -7,6 +7,7 @@ import android.content.ServiceConnection
 import android.os.Bundle
 import android.os.IBinder
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -29,10 +30,10 @@ import androidx.core.view.WindowInsetsCompat
 сикбар должен идти совместно с песней
  */
 class MainActivity : AppCompatActivity() {
-    private lateinit var btnPlay: Button
-    private lateinit var btnStop: Button
-    private lateinit var btnPrevious: Button
-    private lateinit var btnNext: Button
+    private lateinit var btnPlay: ImageButton
+    private lateinit var btnStop: ImageButton
+    private lateinit var btnPrevious: ImageButton
+    private lateinit var btnNext: ImageButton
     private var musicService: MusicService? = null
     private var isBound: Boolean = false
     private val connection = object : ServiceConnection {
@@ -49,6 +50,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -60,10 +62,10 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-        btnPlay = findViewById<Button>(R.id.btnPlay)
-        btnStop = findViewById<Button>(R.id.btnStop)
-        btnPrevious = findViewById<Button>(R.id.btnPrevious)
-        btnNext = findViewById<Button>(R.id.btnNext)
+        btnPlay = findViewById<ImageButton>(R.id.btnPlay)
+        btnStop = findViewById<ImageButton>(R.id.btnStop)
+        btnPrevious = findViewById<ImageButton>(R.id.btnPrevious)
+        btnNext = findViewById<ImageButton>(R.id.btnNext)
 
 
         btnPlay.setOnClickListener {
@@ -91,6 +93,8 @@ class MainActivity : AppCompatActivity() {
         // Bind to LocalService.
         Intent(this, MusicService::class.java).also { intent ->
             bindService(intent, connection, Context.BIND_AUTO_CREATE)
+            startForegroundService(intent)
+
         }
     }
 
